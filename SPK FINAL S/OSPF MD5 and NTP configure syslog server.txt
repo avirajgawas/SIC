@@ -1,0 +1,114 @@
+In all Routers.
+line vty 0 4
+password vtypa55
+login
+exit
+
+enable secret enpa55
+exit
+
+Configure ospf on all routers.
+
+ospf
+
+R1
+router ospf 1
+network 192.168.1.0 0.0.0.255 area 0
+network 10.1.1.0 0.0.0.3 area 0
+
+R2
+router ospf 1
+network 10.1.1.0 0.0.0.3 area 0
+network 10.2.2.0 0.0.0.3 area 0
+
+R3
+router ospf 1
+network 192.168.3.0 0.0.0.255 area 0
+network 10.2.2.0 0.0.0.3 area 0
+
+IN all routers.
+
+router ospf 1
+area 0 authentication message-digest
+exit
+
+In all routers.
+R1
+
+interface s0/1/0
+ip ospf message-digest-key 1 md5 MD5pa55
+
+R2
+
+interface s0/1/1
+ip ospf message-digest-key 1 md5 MD5pa55
+
+R3
+
+interface s0/1/0
+ip ospf message-digest-key 1 md5 MD5pa55
+
+In all Router
+
+R1# show ip ospf interface 
+
+in enable router.
+
+
+-----------------------------------
+
+Configure NTP and configure routers to log messages to the Syslog Server.
+
+Configure NTP
+
+Enable NTP authentication on PC-A.
+
+On PC-A, click NTP under the Services tab to verify NTP service is
+enabled.
+b. To configure NTP authentication, click Enable under Authentication. Use
+key 1 and password NTPpa55
+
+R1(config)# ntp server 192.168.1.5
+R1(config)# ntp update-calendar
+R# show clock
+
+R2(config)# ntp server 192.168.1.5
+R2(config)# ntp update-calendar 
+R# show clock 
+
+R3(config)# ntp server 192.168.1.5
+R3(config)# ntp update-calendar
+R# show clock
+
+
+ ------Configure NTP authentication on the routers.
+ In all router.
+
+ntp authenticate
+ntp trusted-key 1
+ntp authentication-key 1 md5 NTPpa55 
+
+in all router.........
+ service timestamps log datetime msec 
+
+-------Configure NTP authentication on the routers------
+
+In all Routers
+
+ ntp authenticate
+ ntp trusted-key 1
+ ntp authentication-key 1 md5 NTPpa55
+
+In all Routers
+
+service timestamps log datetime msec 
+
+In all Routers
+
+logging host 192.168.1.6
+
+In all Routers. in Router#.
+
+ show logging 
+
+

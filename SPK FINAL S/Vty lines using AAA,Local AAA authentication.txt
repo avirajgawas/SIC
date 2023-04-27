@@ -1,0 +1,65 @@
+In R1 router.....
+
+line vty 0 4
+password vtypa55
+login
+exit
+
+enable secret enpa55
+exit
+
+router ospf 1
+network 192.168.1.0 0.0.0.255 area 0
+exit
+
+router ospf 1
+area 0 authentication message-digest
+exit
+
+int gig0/0
+ip ospf message-digest-key 1 md5 pa55
+
+R1# show ip ospf interface
+
+In Pc 0
+
+PC0 > ping 192.168.1.3
+
+PC1 > ping 192.168.1.2
+
+In R1 Router......
+
+username admin secret adminpa55
+
+aaa new-model
+aaa authentication login default local
+
+line console 0
+login authentication default
+end
+
+login from R1...
+
+Username: admin
+Password: adminpa55
+
+In R1 Router.......
+
+ip domain-name ccnasecurity.com
+crypto key generate rsa
+1024
+
+aaa authentication login SSH-LOGIN local
+line vty 0 4
+login authentication SSH-LOGIN
+transport input ssh
+end
+
+In Pc..............
+
+PC0> ssh –l Admin 192.168.1.1
+Password: adminpa55
+
+PC1> ssh –l Admin 192.168.1.1
+Password: adminpa55
+
